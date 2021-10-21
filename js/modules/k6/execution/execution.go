@@ -225,12 +225,12 @@ func newInfoObj(rt *goja.Runtime, props map[string]func() interface{}) (*goja.Ob
 type tagsDynamicObject struct {
 	Runtime    *goja.Runtime
 	SystemTags map[string]bool
-	Tags       map[string]string
+	Tags       *lib.TagMap
 }
 
 // Get a property value for the key. May return nil if the property does not exist.
 func (o *tagsDynamicObject) Get(key string) goja.Value {
-	tag, ok := o.Tags[key]
+	tag, ok := o.Tags.Get(key)
 	if !ok {
 		return nil
 	}
@@ -242,29 +242,31 @@ func (o *tagsDynamicObject) Set(key string, val goja.Value) bool {
 	if enabled, ok := o.SystemTags[key]; ok && enabled {
 		return false
 	}
-	o.Tags[key] = val.String()
+	o.Tags.Set(key, val.String())
 	return true
 }
 
 // Has returns true if the property exists.
 func (o *tagsDynamicObject) Has(key string) bool {
-	_, ok := o.Tags[key]
+	_, ok := o.Tags.Get(key)
 	return ok
 }
 
 // Delete deletes the property for the key. It returns true on success (note, that includes missing property).
 func (o *tagsDynamicObject) Delete(key string) bool {
-	delete(o.Tags, key)
+	o.Tags.Delete(key)
 	return true
 }
 
 // Keys returns a slice with all existing property keys. The order is not deterministic.
 func (o *tagsDynamicObject) Keys() []string {
-	if len(o.Tags) < 1 {
+	if o.Tags.Len() < 1 {
 		return nil
 	}
-	keys := make([]string, 0, len(o.Tags))
-	for k := range o.Tags {
+
+	tags := o.Tags.Copy()
+	keys := make([]string, 0, len(tags))
+	for k := range tags {
 		keys = append(keys, k)
 	}
 	return keys

@@ -42,9 +42,9 @@ func TestVUTags(t *testing.T) {
 		Options: lib.Options{
 			SystemTags: stats.NewSystemTagSet(stats.TagVU),
 		},
-		Tags: map[string]string{
+		Tags: lib.NewTagMap(map[string]string{
 			"vu": "42",
-		},
+		}),
 	})
 	m, ok := New().NewModuleInstance(
 		&modulestest.InstanceCore{
