@@ -36,7 +36,7 @@ import (
 
 // HTTPCookieJar is cookiejar.Jar wrapper to be used in js scripts
 type HTTPCookieJar struct {
-	jar *cookiejar.Jar
+	Jar *cookiejar.Jar `js:"-"`
 	ctx *context.Context
 }
 
@@ -55,7 +55,7 @@ func (j HTTPCookieJar) CookiesForURL(url string) map[string][]string {
 		panic(err)
 	}
 
-	cookies := j.jar.Cookies(u)
+	cookies := j.Jar.Cookies(u)
 	objs := make(map[string][]string, len(cookies))
 	for _, c := range cookies {
 		objs[c.Name] = append(objs[c.Name], c.Value)
@@ -101,6 +101,6 @@ func (j HTTPCookieJar) Set(url, name, value string, opts goja.Value) (bool, erro
 			}
 		}
 	}
-	j.jar.SetCookies(u, []*http.Cookie{&c})
+	j.Jar.SetCookies(u, []*http.Cookie{&c})
 	return true, nil
 }
