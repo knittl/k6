@@ -113,6 +113,12 @@ func (*WS) Connect(ctx context.Context, url string, args ...goja.Value) (*WSHTTP
 
 	enableCompression := false
 
+	if state == nil {
+		panic("is the tag")
+	}
+	if state.Tags == nil {
+		panic("is the map")
+	}
 	tags := state.CloneTags()
 
 	// Parse the optional second argument (params)

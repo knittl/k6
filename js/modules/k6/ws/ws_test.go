@@ -117,6 +117,7 @@ func newRuntime(t testing.TB) (*httpmultibin.HTTPMultiBin, chan stats.SampleCont
 		Samples:        samples,
 		TLSConfig:      tb.TLSClientConfig,
 		BuiltinMetrics: metrics.RegisterBuiltinMetrics(metrics.NewRegistry()),
+		Tags:           lib.NewTagMap(nil),
 	}
 
 	ctx := new(context.Context)
@@ -154,6 +155,7 @@ func TestSession(t *testing.T) {
 		Samples:        samples,
 		TLSConfig:      tb.TLSClientConfig,
 		BuiltinMetrics: metrics.RegisterBuiltinMetrics(metrics.NewRegistry()),
+		Tags:           lib.NewTagMap(nil),
 	}
 
 	ctx := context.Background()
@@ -545,6 +547,7 @@ func TestSocketSendBinary(t *testing.T) { //nolint: tparallel
 		Samples:        samples,
 		TLSConfig:      tb.TLSClientConfig,
 		BuiltinMetrics: metrics.RegisterBuiltinMetrics(metrics.NewRegistry()),
+		Tags:           lib.NewTagMap(nil),
 	}
 
 	ctx := context.Background()
@@ -635,6 +638,7 @@ func TestErrors(t *testing.T) {
 		},
 		Samples:        samples,
 		BuiltinMetrics: metrics.RegisterBuiltinMetrics(metrics.NewRegistry()),
+		Tags:           lib.NewTagMap(nil),
 	}
 
 	ctx := context.Background()
@@ -747,6 +751,7 @@ func TestSystemTags(t *testing.T) {
 		Samples:        samples,
 		TLSConfig:      tb.TLSClientConfig,
 		BuiltinMetrics: metrics.RegisterBuiltinMetrics(metrics.NewRegistry()),
+		Tags:           lib.NewTagMap(nil),
 	}
 
 	ctx := context.Background()
@@ -810,6 +815,7 @@ func TestTLSConfig(t *testing.T) {
 		},
 		Samples:        samples,
 		BuiltinMetrics: metrics.RegisterBuiltinMetrics(metrics.NewRegistry()),
+		Tags:           lib.NewTagMap(nil),
 	}
 
 	ctx := context.Background()
@@ -949,6 +955,7 @@ func TestUserAgent(t *testing.T) {
 		Samples:        samples,
 		TLSConfig:      tb.TLSClientConfig,
 		BuiltinMetrics: metrics.RegisterBuiltinMetrics(metrics.NewRegistry()),
+		Tags:           lib.NewTagMap(nil),
 	}
 
 	ctx := lib.WithState(context.Background(), state)
